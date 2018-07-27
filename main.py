@@ -1,5 +1,5 @@
 import random as rd
-import profession as pro
+import Player.profession as pro
 
 
 
