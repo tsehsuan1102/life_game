@@ -1,7 +1,7 @@
 import pygame as pg
-
-from pygame.locals import *
-
+import pygame.gfxdraw as gfxdraw
+import math, random
+import sys
 
 
 ######init

@@ -1,5 +1,5 @@
 import random as rd
-import Player.const as const
+import Model.const as const
 
 class profession():
     def __init__(self, name='Beginner', hp=const.Beginner_hp, attack=const.Beginner_attack, sp_mag=const.Beginner_sp_mag ):
