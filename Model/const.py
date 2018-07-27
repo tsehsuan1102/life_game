@@ -1,3 +1,4 @@
+PlayerNum = 2
 
 init_deck = ['a','a','a','s','s','d','d','d']
 

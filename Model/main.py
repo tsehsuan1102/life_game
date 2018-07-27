@@ -1,5 +1,7 @@
 import random as rd
 import Model.profession as pro
+import View.main as view
+
 
 class GameEngine(object):
     '''
@@ -15,6 +17,9 @@ class GameEngine(object):
         print('# a->attack  s->special_attack  d->dodge #')
         print('##########################################')
         self.init_player_list()
+
+        #self.viewer = view.Viewer(self)
+        #self.viewer.Update()
 
     #####initialize every round
     def initialize(self):
@@ -35,12 +40,23 @@ class GameEngine(object):
         ####round_player1
         print('\n# Now is Player1\'s Round : ')
         self.player1.draw()
-        self.player1.choice()       
+        self.player1.choice()
 
+
+        ######Update Screen
+        #self.viewer.Update()
+        ######Update Screen
+
+        
         ####round_player2
         print('\n# Now is Player2\'s Round : ')
         self.player2.draw()
         self.player2.choice()   
+
+        ######Update Screen
+        #self.viewer.Update()
+        ######Update Screen
+        
         
         ##cause damage
         if self.player1.evade == False:
@@ -48,17 +64,22 @@ class GameEngine(object):
 
         if self.player2.evade == False:
             self.player2.hp -= self.player1.damage
+
+        ######Update Screen
+        #self.viewer.Update()
+        ######Update Screen
+
         ##Game Over
-        if self.player1.hp<0 or self.player2.hp<0:
+        if self.player1.hp<=0 or self.player2.hp<=0:
             self.running = False 
 
     def run(self):
         self.running = True
         while self.running == True:
             self.round()
-        if player1.hp>0:
+        if self.player1.hp>0:
             print('--Player1 Win!')
-        elif player2.hp>0:
+        elif self.player2.hp>0:
             print('--Player2 Win!')
         else:
             print('--drew--')
@@ -74,6 +95,8 @@ class GameEngine(object):
             return pro.Priest()
         elif name == 'Archer':
             return pro.Archer()
+        elif name == 'Assassin':
+            return pro.Assassin()
         elif name == 'Pirate':
             return pro.Pirate()
         else:

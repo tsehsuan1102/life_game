@@ -21,10 +21,12 @@ class profession():
         self.sp_limit = const.Sp_limit
         self.recovery = 0
         self.Max_hp = hp
+        self.dices = []
+    
     def initialize(self):
         self.damage = 0
         self.evade = False
-        
+        self.dices = []
         if self.hp < self.Max_hp:
             self.hp = min(self.hp + self.recovery, self.Max_hp)
 
@@ -46,6 +48,17 @@ class profession():
             op=input('you don\'t have that card!\nchooce your card:')
         self.hand.remove(op)
         self.gar.append(op)
+
+        ###dice
+        for i in range(2):
+            self.dices.append( rd.randint(1,6) )
+        
+        ##### Pirate
+        if self.name == 'Pirate' and op != 'a':
+            check = input('As attack?(y/n)')
+            if check == 'y':
+                self.normal_attack()
+                return None
         
         if op == 'a':
             self.normal_attack()
@@ -54,14 +67,20 @@ class profession():
         if op == 'd':
             self.dodge()
 
+        ##### Assassin
+        if self.name == 'Assassin' and op == 's':
+            sum = self.dices[0] + self.dices[1]
+            if sum <= self.dodge_limit:
+                self.evade = True
+                print('dodge successfully')
+
+
     def normal_attack(self):
         self.damage = self.attack
 
     def special(self):
-        one = rd.randint(1,6)
-        two = rd.randint(1,6)
-        print('your dice number is:',one,two)
-        sum = one+two
+        print('your dice number is:', self.dices[0], self.dices[1])
+        sum = self.dices[0] + self.dices[1]
         if sum >= self.sp_limit:
             self.damage = self.attack * self.sp_mag
             print('attack successfully')
@@ -70,10 +89,8 @@ class profession():
             print('QQ')
 
     def dodge(self):
-        one = rd.randint(1,6)
-        two = rd.randint(1,6)
-        print('your dice number is:',one,two)
-        sum = one+two
+        print('your dice number is:', self.dices[0], self.dices[1])
+        sum = self.dices[0] + self.dices[1]
         if sum <= self.dodge_limit:
             self.evade = True
             print('dodge successfully')
@@ -120,6 +137,10 @@ class Assassin(profession):
 class Pirate(profession):
     def __init__(self):
         super().__init__('Pirate', const.Pirate_hp, const.Pirate_attack, const.Pirate_sp_mag)
+
+
+
+
 
 
 
