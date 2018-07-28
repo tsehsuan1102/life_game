@@ -1,7 +1,8 @@
 import random as rd
 import Model.profession as pro
 import View.main as view
-
+import colorama
+from colorama import Fore
 
 class GameEngine(object):
     '''
@@ -13,11 +14,12 @@ class GameEngine(object):
         self.player_names = player_names
         self.player1 = None
         self.player2 = None
-        print('##########################################')
-        print('# a->attack  s->special_attack  d->dodge #')
-        print('##########################################')
-        self.init_player_list()
 
+        print("\033[3;31;47m\n")
+        print('          ##########################################              ')
+        print('          # a->attack  s->special_attack  d->dodge #              ')
+        print('          ##########################################              ')
+        self.init_player_list()
         #self.viewer = view.Viewer(self)
         #self.viewer.Update()
 
@@ -34,30 +36,23 @@ class GameEngine(object):
 
     def round(self):
         self.initialize()
-        print('Player1 hp:',self.player1.hp)
-        print('Player2 hp:',self.player2.hp)
-        
+
+        print("\033[1;37;44m\n")
+        print('######################## Player1(', self.player1.name , ')', ' hp:',self.player1.hp,'########################')
+        print('######################## Player2(', self.player2.name , ')', ' hp:',self.player2.hp,'########################')
+       
         ####round_player1
+        print("\033[1;36;40m\n")
         print('\n# Now is Player1\'s Round : ')
         self.player1.draw()
         self.player1.choice()
-
-
-        ######Update Screen
-        #self.viewer.Update()
-        ######Update Screen
-
-        
+  
         ####round_player2
+        print("\033[1;35;40m\n")
         print('\n# Now is Player2\'s Round : ')
         self.player2.draw()
         self.player2.choice()   
-
-        ######Update Screen
-        #self.viewer.Update()
-        ######Update Screen
-        
-        
+       
         ##cause damage
         if self.player1.evade == False:
             self.player1.hp -= self.player2.damage
@@ -65,24 +60,21 @@ class GameEngine(object):
         if self.player2.evade == False:
             self.player2.hp -= self.player1.damage
 
-        ######Update Screen
-        #self.viewer.Update()
-        ######Update Screen
-
         ##Game Over
         if self.player1.hp<=0 or self.player2.hp<=0:
-            self.running = False 
+            self.running = False
+            print("\033[1;30;47m\n")
 
     def run(self):
         self.running = True
         while self.running == True:
             self.round()
         if self.player1.hp>0:
-            print('--Player1 Win!')
+            print('--------------------Player1 Win!---------------------------')
         elif self.player2.hp>0:
-            print('--Player2 Win!')
+            print('--------------------Player2 Win!---------------------------')
         else:
-            print('--drew--')
+            print('--------------------   Drew!!   ---------------------------')
 
     def ask(self, name):
         if name == 'Beginner':

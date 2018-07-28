@@ -59,7 +59,12 @@ class profession():
             if check == 'y':
                 self.normal_attack()
                 return None
-        
+        ##### Fighter
+        if self.name == 'Fighter' and op == 's':
+            if self.dices[0] + self.dices[1] <= 8:
+                self.hp -= 500
+
+        ######### default
         if op == 'a':
             self.normal_attack()
         if op == 's':
