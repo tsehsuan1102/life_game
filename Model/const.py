@@ -27,7 +27,7 @@ Priest_hp = 5000
 Priest_attack = 700
 Priest_sp_mag = 2
 Priest_sp_limit = 8
-Priest_recovery = 500
+Priest_recovery = 300
 
 ###### Archer
 Archer_hp = 7000

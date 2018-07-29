@@ -9,9 +9,10 @@ class GameEngine(object):
     Tracks the game state.
     '''
     ####init at the start of the battle
-    def __init__(self, player_names):
+    def __init__(self):
         self.running = False
-        self.player_names = player_names
+        self.player_names = ["", ""]
+        
         self.player1 = None
         self.player2 = None
 
@@ -19,6 +20,18 @@ class GameEngine(object):
         print('          ##########################################              ')
         print('          # a->attack  s->special_attack  d->dodge #              ')
         print('          ##########################################              ')
+        print('          ##########################################              ')
+        print('          #            Profession List             #              ')
+        print('          #                Beginner                #              ')
+        print('          #                Fighter                 #              ')
+        print('          #                Magician                #              ')
+        print('          #                Priest                  #              ')
+        print('          #                Archer                  #              ')
+        print('          #                Assassin                #              ')
+        print('          #                Pirate                  #              ')
+        print('          ##########################################              ')
+
+
         self.init_player_list()
         #self.viewer = view.Viewer(self)
         #self.viewer.Update()
@@ -30,10 +43,17 @@ class GameEngine(object):
 
     def init_player_list(self):
         #player1
-        self.player1 = (self.ask(self.player_names[0]) )
+        print("\033[1;36;40m\n")
+        while self.player1 is None:
+            self.player_names[0] = input('Player1\'s profession: ')
+            self.player1 = (self.ask(self.player_names[0]) )
+        
         #player2
-        self.player2 = (self.ask(self.player_names[1]) )
-
+        print("\033[1;35;40m\n")
+        while self.player2 is None:
+            self.player_names[1] = input('Player2\'s profession: ')
+            self.player2 = (self.ask(self.player_names[1]) )
+         
     def round(self):
         self.initialize()
 
@@ -53,10 +73,18 @@ class GameEngine(object):
         self.player2.draw()
         self.player2.choice()   
        
+        
+        #### Archer skill ####
+        if self.player1.name == 'Archer' and self.player1.evade == True and self.player2.damage > 0:
+            self.player1.success_dodge = True
+
+        if self.player2.name == 'Archer' and self.player2.evade == True and self.player1.damage > 0:
+            self.player2.success_dodge = True
+
         ##cause damage
         if self.player1.evade == False:
             self.player1.hp -= self.player2.damage
-
+            
         if self.player2.evade == False:
             self.player2.hp -= self.player1.damage
 

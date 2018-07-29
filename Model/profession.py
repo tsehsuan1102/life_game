@@ -22,7 +22,7 @@ class profession():
         self.recovery = 0
         self.Max_hp = hp
         self.dices = []
-    
+        self.success_dodge = False
     def initialize(self):
         self.damage = 0
         self.evade = False
@@ -82,6 +82,9 @@ class profession():
 
     def normal_attack(self):
         self.damage = self.attack
+        if self.success_dodge == True:
+            self.damage *= 2
+            self.success_dodge = False
 
     def special(self):
         print('your dice number is:', self.dices[0], self.dices[1])
